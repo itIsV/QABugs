@@ -6,6 +6,7 @@ import com.example.qabugs.demo.model.dto.TestCaseDto;
 import com.example.qabugs.demo.service.TestCaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -121,6 +122,15 @@ public class TestCaseController {
 
 
             return ResponseEntity.ok(testCaseDto);
+
+    }
+
+    @DeleteMapping("/api/testcases/{id}")
+        public ResponseEntity<Void> deleteTestByID(@PathVariable Long id) {
+
+        testCaseService.deleteTestByID(id);
+
+        return ResponseEntity.noContent().build();
 
     }
 

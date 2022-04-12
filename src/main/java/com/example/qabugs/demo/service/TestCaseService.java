@@ -58,6 +58,8 @@ public class TestCaseService implements ITestCaseService {
     @Override
     public void deleteTestByID(Long id) {
 
+        testCaseRepository.deleteById(id);
+
     }
 
     @Override
