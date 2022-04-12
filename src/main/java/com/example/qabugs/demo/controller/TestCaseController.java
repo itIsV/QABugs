@@ -5,7 +5,7 @@ import com.example.qabugs.demo.model.TestCase;
 import com.example.qabugs.demo.model.dto.TestCaseDto;
 import com.example.qabugs.demo.service.TestCaseService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -13,7 +13,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -23,7 +22,7 @@ public class TestCaseController {
     TestCaseService testCaseService;
 
     @GetMapping("/api/testcases/new/{something}")
-        public ResponseEntity<String> createAnything(@PathVariable String something, UriComponentsBuilder uriComponentsBuilder) {
+        public ResponseEntity<String> createNothing(@PathVariable String something, UriComponentsBuilder uriComponentsBuilder) {
 
             String response = testCaseService.createNothing(something);
             URI uri = uriComponentsBuilder.path("/api/testcases/{variable}")
@@ -98,6 +97,30 @@ public class TestCaseController {
             });
 
             return ResponseEntity.ok(testCasesDto);
+
+    }
+
+    @PutMapping("/api/testcases/{id}")
+        public ResponseEntity<TestCaseDto> updateTestCaseByID(@PathVariable Long id, @RequestBody TestCase testCase) {
+
+            TestCase oldTestCase = testCaseService.getTestByID(id);
+
+            testCase.setId_case(oldTestCase.getId_case());
+            testCaseService.createTest(testCase);
+
+            TestCaseDto testCaseDto = TestCaseDto
+                    .builder()
+                    .idCase(oldTestCase.getId_case())
+                    .description(testCase.getDescription())
+                    .tested(testCase.getTested())
+                    .passed(testCase.getPassed())
+                    .number_of_tries(testCase.getNumber_of_tries())
+                    .last_update(testCase.getLast_update()
+                            .format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    .build();
+
+
+            return ResponseEntity.ok(testCaseDto);
 
     }
 
