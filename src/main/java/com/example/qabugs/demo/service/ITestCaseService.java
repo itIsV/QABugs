@@ -10,7 +10,7 @@ public interface ITestCaseService {
     public TestCase createTest(TestCase testCase);
     public TestCase getTestByID(Long id);
     public List<TestCase> getTests();
-    public TestCase updateTestByID(Long id);
+    public TestCase updateTestByID(TestCase testCase);
     public void deleteTestByID(Long id);
     public List<TestCase> getTestsByDateAfter(Date date);
 

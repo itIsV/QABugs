@@ -51,8 +51,11 @@ public class TestCaseService implements ITestCaseService {
     }
 
     @Override
-    public TestCase updateTestByID(Long id) {
-        return null;
+    public TestCase updateTestByID(TestCase testCase) {
+
+        TestCase newTestCase = testCaseRepository.save(testCase);
+
+        return newTestCase;
     }
 
     @Override

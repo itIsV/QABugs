@@ -107,7 +107,7 @@ public class TestCaseController {
             TestCase oldTestCase = testCaseService.getTestByID(id);
 
             testCase.setId_case(oldTestCase.getId_case());
-            testCaseService.createTest(testCase);
+            testCaseService.updateTestByID(testCase);
 
             TestCaseDto testCaseDto = TestCaseDto
                     .builder()
