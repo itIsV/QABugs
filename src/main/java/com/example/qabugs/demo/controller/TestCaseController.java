@@ -5,7 +5,6 @@ import com.example.qabugs.demo.model.TestCase;
 import com.example.qabugs.demo.model.dto.TestCaseDto;
 import com.example.qabugs.demo.service.TestCaseService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +58,11 @@ public class TestCaseController {
 
     @GetMapping("/api/testcases/{id}")
         public ResponseEntity<TestCaseDto> getTestByID(@PathVariable Long id) {
+            if(id < 0) {
+                String message = "kkkkk se ferrou otário";
+                throw new MyException(message);
 
+            }
             TestCase testCase = testCaseService.getTestByID(id);
 
             TestCaseDto testCaseDto = TestCaseDto
@@ -134,4 +137,10 @@ public class TestCaseController {
 
     }
 
+    @ExceptionHandler
+        public ResponseEntity<String> handleMyException(MyException exception) {
+
+                return ResponseEntity.badRequest().body(exception.getMessage());
+
+            }
 }
